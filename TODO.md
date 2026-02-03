@@ -11,3 +11,9 @@
 - [ ] Show parsing confidence scores
 - [ ] Add copy-to-clipboard for extracted data
 - [ ] Mobile responsive improvements
+
+## Backend Improvements
+- [ ] Add rate limiting
+- [ ] Implement caching for repeated uploads
+- [ ] Add batch upload support (multiple resumes)
+- [ ] Database storage for parsed resumes (PostgreSQL/SQLite)
