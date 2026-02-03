@@ -23,3 +23,12 @@
 - [ ] Add sample resumes for testing
 - [ ] Dockerize the application
 - [ ] Deploy to cloud (Railway/Render/Vercel)
+
+## Nice to Have
+- [ ] AI-powered job matching suggestions
+- [ ] Resume improvement tips
+- [ ] Compare multiple resumes side-by-side
+- [ ] Generate cover letter from resume
+
+---
+*Pick 1-2 items per session to keep momentum!*
