@@ -17,3 +17,9 @@
 - [ ] Implement caching for repeated uploads
 - [ ] Add batch upload support (multiple resumes)
 - [ ] Database storage for parsed resumes (PostgreSQL/SQLite)
+
+## Testing & Deployment
+- [ ] Write unit tests for parser
+- [ ] Add sample resumes for testing
+- [ ] Dockerize the application
+- [ ] Deploy to cloud (Railway/Render/Vercel)
