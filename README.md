@@ -1,23 +1,39 @@
 # Smart Resume Parser
 
-An NLP-powered REST API that extracts structured information from PDF resumes. Built with FastAPI and spaCy.
+A full-stack NLP-powered resume parsing application. Upload a PDF or DOCX resume and get structured data with scoring and improvement suggestions.
+
+![Python](https://img.shields.io/badge/Python-3.12-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.109-green)
+![React](https://img.shields.io/badge/React-18-61DAFB)
+![spaCy](https://img.shields.io/badge/spaCy-3.8-09A3D5)
 
 ## Features
 
-- **Contact Extraction**: Name, email, phone, LinkedIn URL, location
-- **Skills Detection**: Technical skills, programming languages, frameworks, tools
-- **Experience Parsing**: Job titles, companies, dates, descriptions, highlights
-- **Education Extraction**: Degrees, institutions, fields of study, graduation dates
-- **Additional Info**: Certifications, spoken languages, professional summary
+- **Multi-format Support**: PDF and DOCX files
+- **Contact Extraction**: Name, email, phone, LinkedIn, location
+- **Skills Detection**: 150+ technical skills auto-detected
+- **Experience Parsing**: Job titles, companies, dates, descriptions
+- **Education Extraction**: Degrees, institutions, fields of study
+- **Resume Scoring**: 0-100 score with grade (A+ to F)
+- **Improvement Suggestions**: Actionable tips to improve your resume
+- **Export Options**: Download as JSON or CSV
+- **Modern UI**: React frontend with drag & drop upload
 
 ## Tech Stack
 
-- **FastAPI** - Modern, fast web framework for building APIs
-- **spaCy** - Industrial-strength NLP library
+### Backend
+- **FastAPI** - Modern async Python web framework
+- **spaCy** - Industrial-strength NLP
 - **PyMuPDF** - PDF text extraction
-- **Pydantic** - Data validation and serialization
+- **python-docx** - DOCX text extraction
+- **Pydantic** - Data validation
 
-## Installation
+### Frontend
+- **React 18** - UI library
+- **Vite** - Fast build tool
+- **Tailwind CSS** - Utility-first styling
+
+## Quick Start
 
 ### 1. Clone the repository
 
@@ -26,87 +42,64 @@ git clone https://github.com/H41s3/Smart-Resume-Parser.git
 cd Smart-Resume-Parser
 ```
 
-### 2. Create virtual environment
+### 2. Set up Backend
 
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+# Create virtual environment
+python -m venv parser
+source parser/bin/activate  # Windows: parser\Scripts\activate
 
-### 3. Install dependencies
-
-```bash
+# Install dependencies
 pip install -r requirements.txt
-```
 
-### 4. Download spaCy model
-
-```bash
+# Download spaCy model
 python -m spacy download en_core_web_sm
 ```
 
-## Usage
-
-### Start the server
+### 3. Set up Frontend
 
 ```bash
+cd frontend
+npm install
+```
+
+### 4. Run the Application
+
+**Terminal 1 - Backend:**
+```bash
+source parser/bin/activate
 uvicorn app.main:app --reload
 ```
 
-The API will be available at `http://localhost:8000`
-
-### API Documentation
-
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
-
-### Endpoints
-
-#### Health Check
-
+**Terminal 2 - Frontend:**
 ```bash
-GET /api/v1/health
+cd frontend
+npm run dev
 ```
 
-#### Parse PDF Resume
+### 5. Open in Browser
 
-```bash
-POST /api/v1/parse
-```
+- **Frontend**: http://localhost:3000
+- **API Docs**: http://localhost:8000/docs
 
-Upload a PDF file to extract structured data.
+## API Endpoints
 
-**Example with curl:**
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/v1/health` | Health check |
+| POST | `/api/v1/parse` | Parse resume file (PDF/DOCX) |
+| POST | `/api/v1/parse/text` | Parse plain text |
+| POST | `/api/v1/export/json` | Export as JSON file |
+| POST | `/api/v1/export/csv` | Export as CSV file |
+
+### Example Request
 
 ```bash
 curl -X POST "http://localhost:8000/api/v1/parse" \
-  -H "accept: application/json" \
   -F "file=@resume.pdf"
 ```
 
-**Example with Python:**
-
-```python
-import requests
-
-with open("resume.pdf", "rb") as f:
-    response = requests.post(
-        "http://localhost:8000/api/v1/parse",
-        files={"file": f}
-    )
-    data = response.json()
-    print(data)
-```
-
-#### Parse Plain Text
-
-```bash
-POST /api/v1/parse/text
-```
-
-Parse resume from plain text input.
-
-### Response Format
+### Example Response
 
 ```json
 {
@@ -114,48 +107,34 @@ Parse resume from plain text input.
   "data": {
     "contact": {
       "name": "John Doe",
-      "email": "john.doe@email.com",
+      "email": "john@example.com",
       "phone": "(555) 123-4567",
-      "linkedin": "linkedin.com/in/johndoe",
-      "location": "San Francisco, CA"
+      "linkedin": "linkedin.com/in/johndoe"
     },
-    "summary": "Experienced software engineer with 5+ years...",
-    "skills": [
-      "Python",
-      "JavaScript",
-      "React",
-      "Node.js",
-      "PostgreSQL",
-      "AWS",
-      "Docker"
-    ],
+    "skills": ["Python", "React", "AWS", "Docker"],
     "experience": [
       {
-        "company": "Tech Corp",
         "title": "Senior Software Engineer",
+        "company": "Tech Corp",
         "start_date": "Jan 2020",
         "end_date": "Present",
-        "description": "Led development of microservices architecture",
-        "highlights": [
-          "Reduced API latency by 40%",
-          "Mentored team of 5 junior developers"
-        ]
+        "highlights": ["Led team of 5", "Reduced latency by 40%"]
       }
     ],
     "education": [
       {
-        "institution": "University of California",
         "degree": "Bachelor's",
         "field_of_study": "Computer Science",
-        "end_date": "2018"
+        "institution": "MIT"
       }
-    ],
-    "certifications": [
-      "AWS Certified Solutions Architect"
-    ],
-    "languages": [
-      "English",
-      "Spanish"
+    ]
+  },
+  "score": {
+    "total_score": 85,
+    "grade": "A",
+    "suggestions": [
+      "Add more certifications",
+      "Include a professional summary"
     ]
   }
 }
@@ -164,27 +143,54 @@ Parse resume from plain text input.
 ## Project Structure
 
 ```
-smart-resume-parser/
-├── app/
-│   ├── __init__.py
-│   ├── main.py              # FastAPI application
+Smart-Resume-Parser/
+├── app/                          # Backend (FastAPI)
+│   ├── main.py                   # App entry point
 │   ├── api/
-│   │   └── routes.py        # API endpoints
+│   │   └── routes.py             # API endpoints
 │   ├── core/
-│   │   └── config.py        # Configuration
+│   │   └── config.py             # Configuration
 │   ├── models/
-│   │   └── schemas.py       # Pydantic models
+│   │   └── schemas.py            # Pydantic models
 │   └── services/
-│       ├── pdf_extractor.py # PDF text extraction
-│       └── resume_parser.py # NLP parsing logic
-├── requirements.txt
-├── .gitignore
+│       ├── document_extractor.py # PDF/DOCX text extraction
+│       ├── resume_parser.py      # NLP parsing logic
+│       └── resume_scorer.py      # Scoring algorithm
+│
+├── frontend/                     # Frontend (React)
+│   ├── src/
+│   │   ├── App.jsx               # Main component
+│   │   └── components/
+│   │       ├── FileUpload.jsx    # Drag & drop upload
+│   │       └── ResumeDisplay.jsx # Results display
+│   ├── package.json
+│   └── vite.config.js
+│
+├── requirements.txt              # Python dependencies
+├── LEARNING.md                   # Comprehensive project guide
+├── TODO.md                       # Roadmap
 └── README.md
 ```
 
+## Scoring System
+
+| Section | Max Points |
+|---------|------------|
+| Contact Info | 15 |
+| Skills | 20 |
+| Experience | 30 |
+| Education | 15 |
+| Summary | 10 |
+| Certifications | 5 |
+| Languages | 5 |
+
+**Bonus points** for: 10+ skills, advanced degrees, certifications.
+
+**Grades**: A+ (90+), A (80+), B (70+), C (60+), D (50+), F (<50)
+
 ## Configuration
 
-Environment variables can be set in a `.env` file:
+Create a `.env` file in the root directory:
 
 ```env
 DEBUG=false
@@ -192,40 +198,43 @@ SPACY_MODEL=en_core_web_sm
 MAX_FILE_SIZE=10485760
 ```
 
-## Extending the Parser
+## Extending
 
-### Adding Custom Skills
+### Add Custom Skills
 
-Edit `TECH_SKILLS` list in `app/services/resume_parser.py`:
+Edit `TECH_SKILLS` in `app/services/resume_parser.py`:
 
 ```python
 TECH_SKILLS = [
-    # Add your custom skills
-    "Your Skill",
+    "Your Custom Skill",
     ...
 ]
 ```
 
-### Using a Different spaCy Model
-
-For better accuracy, use a larger model:
+### Use Larger NLP Model
 
 ```bash
 python -m spacy download en_core_web_lg
 ```
 
-Then set the environment variable:
+Then set `SPACY_MODEL=en_core_web_lg` in `.env`.
 
-```env
-SPACY_MODEL=en_core_web_lg
-```
+## Learning
 
-## Limitations
+See [LEARNING.md](LEARNING.md) for a comprehensive guide covering:
+- Project architecture
+- How each file works
+- How software engineers read code
+- Real-world concepts (async/await, REST, Docker, etc.)
+- Interview talking points
 
-- Only supports PDF files (text-based, not scanned images)
-- Best results with well-formatted resumes
-- English language only (by default)
-- May require tuning for specific resume formats
+## Roadmap
+
+See [TODO.md](TODO.md) for upcoming features:
+- [ ] Database storage
+- [ ] User authentication
+- [ ] Batch upload
+- [ ] Docker deployment
 
 ## License
 
@@ -233,4 +242,4 @@ MIT
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Pull requests welcome! Please read the code style in existing files.
