@@ -4,6 +4,7 @@ import ResumeDisplay from './components/ResumeDisplay'
 
 function App() {
   const [resumeData, setResumeData] = useState(null)
+  const [scoreData, setScoreData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
@@ -11,12 +12,13 @@ function App() {
     setLoading(true)
     setError(null)
     setResumeData(null)
+    setScoreData(null)
 
     const formData = new FormData()
     formData.append('file', file)
 
     try {
-      const response = await fetch('/api/v1/parse', {
+      const response = await fetch('/api/v1/parse?include_score=true', {
         method: 'POST',
         body: formData,
       })
@@ -25,6 +27,7 @@ function App() {
 
       if (data.success) {
         setResumeData(data.data)
+        setScoreData(data.score)
       } else {
         setError(data.error || 'Failed to parse resume')
       }
@@ -37,6 +40,7 @@ function App() {
 
   const handleReset = () => {
     setResumeData(null)
+    setScoreData(null)
     setError(null)
   }
 
@@ -68,7 +72,7 @@ function App() {
                 Extract insights from any resume
               </h2>
               <p className="text-slate-400 text-lg">
-                Upload a PDF resume and get structured data instantly
+                Upload a PDF or DOCX resume and get structured data instantly
               </p>
             </div>
 
@@ -111,7 +115,7 @@ function App() {
               </svg>
               Upload another resume
             </button>
-            <ResumeDisplay data={resumeData} />
+            <ResumeDisplay data={resumeData} score={scoreData} />
           </div>
         )}
       </main>

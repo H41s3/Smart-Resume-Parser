@@ -48,11 +48,32 @@ class ParsedResume(BaseModel):
     raw_text: str | None = None
 
 
+class ScoreBreakdown(BaseModel):
+    """Score breakdown for a section."""
+
+    score: int
+    max: int
+    details: str
+
+
+class ResumeScore(BaseModel):
+    """Resume scoring result."""
+
+    total_score: int
+    grade: str
+    base_score: int
+    bonus_score: int
+    breakdown: dict[str, ScoreBreakdown]
+    bonuses: dict[str, int]
+    suggestions: list[str]
+
+
 class ParseResponse(BaseModel):
     """API response for resume parsing."""
 
     success: bool
     data: ParsedResume | None = None
+    score: ResumeScore | None = None
     error: str | None = None
 
 

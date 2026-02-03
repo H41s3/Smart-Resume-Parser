@@ -12,7 +12,7 @@ class Settings(BaseSettings):
 
     # File upload settings
     max_file_size: int = 10 * 1024 * 1024  # 10MB
-    allowed_extensions: set[str] = {".pdf"}
+    allowed_extensions: set[str] = {".pdf", ".docx"}
 
     # NLP settings
     spacy_model: str = "en_core_web_sm"

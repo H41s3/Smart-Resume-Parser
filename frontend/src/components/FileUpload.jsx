@@ -32,8 +32,15 @@ function FileUpload({ onUpload, loading }) {
   }
 
   const handleFile = (file) => {
-    if (file.type !== 'application/pdf') {
-      alert('Please upload a PDF file')
+    const validTypes = [
+      'application/pdf',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    ]
+    const validExtensions = ['.pdf', '.docx']
+    const fileExt = file.name.toLowerCase().slice(file.name.lastIndexOf('.'))
+    
+    if (!validTypes.includes(file.type) && !validExtensions.includes(fileExt)) {
+      alert('Please upload a PDF or DOCX file')
       return
     }
     setFileName(file.name)
@@ -63,7 +70,7 @@ function FileUpload({ onUpload, loading }) {
       <input
         ref={inputRef}
         type="file"
-        accept=".pdf"
+        accept=".pdf,.docx"
         onChange={handleChange}
         className="hidden"
       />
@@ -88,7 +95,7 @@ function FileUpload({ onUpload, loading }) {
               <p className="text-white font-medium">
                 Drop your resume here or <span className="text-blue-400">browse</span>
               </p>
-              <p className="text-slate-400 text-sm mt-1">PDF files only, up to 10MB</p>
+              <p className="text-slate-400 text-sm mt-1">PDF or DOCX files, up to 10MB</p>
             </div>
           </>
         )}

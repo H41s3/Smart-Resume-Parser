@@ -18,24 +18,44 @@ class ResumeParser:
     # Common technical skills to look for
     TECH_SKILLS = [
         # Programming Languages
-        "Python", "Java", "JavaScript", "TypeScript", "C++", "C#", "Go", "Rust",
+        "Python", "Java", "JavaScript", "TypeScript", "C++", "C#", "C", "Go", "Rust",
         "Ruby", "PHP", "Swift", "Kotlin", "Scala", "R", "MATLAB", "Perl", "SQL",
+        "Objective-C", "Dart", "Lua", "Haskell", "Clojure", "Elixir", "F#",
         # Web Technologies
-        "HTML", "CSS", "React", "Angular", "Vue", "Node.js", "Express", "Django",
-        "Flask", "FastAPI", "Spring", "Rails", "Laravel", "ASP.NET",
+        "HTML", "CSS", "SASS", "LESS", "React", "Angular", "Vue", "Svelte",
+        "Node.js", "Express", "Next.js", "Nuxt.js", "Gatsby", "Django", "Flask",
+        "FastAPI", "Spring", "Spring Boot", "Rails", "Laravel", "ASP.NET",
+        "jQuery", "Bootstrap", "Tailwind CSS", "Material UI", "Redux", "MobX",
+        # Mobile
+        "React Native", "Flutter", "iOS", "Android", "SwiftUI", "Xamarin",
         # Databases
         "MySQL", "PostgreSQL", "MongoDB", "Redis", "Elasticsearch", "SQLite",
-        "Oracle", "SQL Server", "DynamoDB", "Cassandra", "Neo4j",
+        "Oracle", "SQL Server", "DynamoDB", "Cassandra", "Neo4j", "MariaDB",
+        "Firebase", "Supabase", "CouchDB", "InfluxDB", "TimescaleDB",
         # Cloud & DevOps
-        "AWS", "Azure", "GCP", "Docker", "Kubernetes", "Jenkins", "GitLab CI",
-        "GitHub Actions", "Terraform", "Ansible", "Linux", "Unix", "Bash",
+        "AWS", "Azure", "GCP", "Google Cloud", "Docker", "Kubernetes", "K8s",
+        "Jenkins", "GitLab CI", "GitHub Actions", "CircleCI", "Travis CI",
+        "Terraform", "Ansible", "Puppet", "Chef", "Linux", "Unix", "Bash",
+        "Nginx", "Apache", "Cloudflare", "Heroku", "Vercel", "Netlify",
+        "AWS Lambda", "S3", "EC2", "RDS", "CloudFormation", "EKS", "ECS",
         # Data & ML
         "TensorFlow", "PyTorch", "Scikit-learn", "Pandas", "NumPy", "Keras",
         "NLP", "Machine Learning", "Deep Learning", "Computer Vision", "AI",
         "Data Science", "Big Data", "Spark", "Hadoop", "Tableau", "Power BI",
-        # Other
-        "Git", "REST API", "GraphQL", "Microservices", "Agile", "Scrum",
-        "CI/CD", "Unit Testing", "TDD", "JIRA", "Confluence",
+        "OpenCV", "NLTK", "spaCy", "Hugging Face", "LangChain", "OpenAI",
+        "Data Analysis", "Data Engineering", "ETL", "Airflow", "Kafka", "Flink",
+        # Testing
+        "Jest", "Mocha", "Pytest", "JUnit", "Selenium", "Cypress", "Playwright",
+        "Unit Testing", "Integration Testing", "E2E Testing", "TDD", "BDD",
+        # Other Tools & Concepts
+        "Git", "GitHub", "GitLab", "Bitbucket", "SVN",
+        "REST API", "GraphQL", "gRPC", "WebSocket", "OAuth", "JWT",
+        "Microservices", "Serverless", "Event-Driven", "Domain-Driven Design",
+        "Agile", "Scrum", "Kanban", "JIRA", "Confluence", "Trello", "Asana",
+        "CI/CD", "DevOps", "SRE", "Monitoring", "Logging", "Prometheus", "Grafana",
+        "RabbitMQ", "SQS", "SNS", "Celery", "Redis Queue",
+        "Figma", "Sketch", "Adobe XD", "Photoshop", "Illustrator",
+        "VS Code", "IntelliJ", "PyCharm", "Vim", "Emacs",
     ]
 
     # Education degree patterns

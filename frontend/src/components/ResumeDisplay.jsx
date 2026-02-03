@@ -1,8 +1,68 @@
-function ResumeDisplay({ data }) {
+function ResumeDisplay({ data, score }) {
   const { contact, summary, skills, experience, education, certifications, languages } = data
+
+  const getGradeColor = (grade) => {
+    if (grade.startsWith('A')) return 'from-green-500 to-emerald-600'
+    if (grade === 'B') return 'from-blue-500 to-cyan-600'
+    if (grade === 'C') return 'from-yellow-500 to-orange-600'
+    return 'from-red-500 to-pink-600'
+  }
 
   return (
     <div className="space-y-8">
+      {/* Score Card */}
+      {score && (
+        <section className="bg-slate-800/50 rounded-2xl border border-slate-700/50 p-6">
+          <div className="flex flex-col md:flex-row md:items-center gap-6">
+            {/* Score Circle */}
+            <div className="flex-shrink-0">
+              <div className={`w-28 h-28 rounded-full bg-gradient-to-br ${getGradeColor(score.grade)} p-1`}>
+                <div className="w-full h-full rounded-full bg-slate-900 flex flex-col items-center justify-center">
+                  <span className="text-3xl font-bold text-white">{score.total_score}</span>
+                  <span className="text-sm text-slate-400">/ 100</span>
+                </div>
+              </div>
+            </div>
+            
+            {/* Grade and Details */}
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-3">
+                <span className={`text-4xl font-bold bg-gradient-to-r ${getGradeColor(score.grade)} bg-clip-text text-transparent`}>
+                  Grade: {score.grade}
+                </span>
+              </div>
+              
+              {/* Score Breakdown */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {Object.entries(score.breakdown).map(([key, value]) => (
+                  <div key={key} className="bg-slate-700/30 rounded-lg p-2">
+                    <p className="text-xs text-slate-400 capitalize">{key}</p>
+                    <p className="text-white font-medium">{value.score}/{value.max}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          
+          {/* Suggestions */}
+          {score.suggestions && score.suggestions.length > 0 && (
+            <div className="mt-6 pt-6 border-t border-slate-700">
+              <h4 className="text-sm font-medium text-slate-400 mb-3">Suggestions to improve</h4>
+              <ul className="space-y-2">
+                {score.suggestions.map((suggestion, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-sm text-slate-300">
+                    <svg className="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {suggestion}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </section>
+      )}
+
       {/* Contact Card */}
       <section className="bg-slate-800/50 rounded-2xl border border-slate-700/50 overflow-hidden">
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6">
